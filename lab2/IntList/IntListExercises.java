@@ -50,16 +50,14 @@ public class IntListExercises {
      *  the first digit of x.
      */
     public static boolean firstDigitEqualsLastDigit(int x) {
+        x = Math.abs(x);         // 处理负数
         int lastDigit = x % 10;
-        while (x > 10) {
-            x = x / 10;
+
+        while (x >= 10) {        // 注意是 >= 10
+            x /= 10;
         }
-        int firstDigit = 0;
-        if (x% 10==0){
-            firstDigit = 1;
-        }else {
-            firstDigit = x % 10;
-        }
+        int firstDigit = x;      // 现在 x 就是一位数
+
         return firstDigit == lastDigit;
     }
 
