@@ -186,7 +186,36 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
 
+        int i = b.size();
+        int row = 0;
+        int col = 0;
+        for (row = 0; row<i; row++){
+            for (col = 0; col<i; col++){
+                if (b.tile(col,row) == null){
+                    return true;
+                }
+            }
+        }
 
+        if (emptySpaceExists(b) == false){// 说明棋盘上面全是棋子没有空位
+            for (row = 0; row<i; row++){
+                for (col = 0; col<i-1; col++){
+                    if(b.tile(col,row).value() == b.tile(col+1,row).value() ){
+                        return true;
+                    }
+
+                }
+            }
+            for (row = 0; row<i-1; row++){
+                for (col = 0; col<i; col++){
+                    if(b.tile(col,row).value() == b.tile(col,row+1).value() ){
+                        return true;
+                    }
+
+                }
+            }
+
+        }
         // TODO: Fill in this function.
         return false;
     }
