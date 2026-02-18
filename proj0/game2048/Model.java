@@ -160,6 +160,20 @@ public class Model extends Observable {
      * given a Tile object t, we get its value with t.value().
      */
     public static boolean maxTileExists(Board b) {
+
+        int i = b.size(); //求棋盘长度，棋盘为正方形
+        int col = 0;
+        int row = 0;
+
+        for (row =0; row<i; row++){
+            for (col =0; col<i; col++){
+                if(b.tile(col,row) == null){
+                    continue;
+                } else if (b.tile(col,row).value() == 2048) {
+                    return true;
+                }
+            }
+        }
         // TODO: Fill in this function.
         return false;
     }
@@ -171,6 +185,8 @@ public class Model extends Observable {
      * 2. There are two adjacent tiles with the same value.
      */
     public static boolean atLeastOneMoveExists(Board b) {
+
+
         // TODO: Fill in this function.
         return false;
     }
