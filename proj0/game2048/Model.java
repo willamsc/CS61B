@@ -114,7 +114,8 @@ public class Model extends Observable {
         board.setViewingPerspective(side);
         int col =0;
         for(col =0;col<board.size();col++){/*遍历每一列*/
-           changed =changed || processColumn(col);
+            boolean tempt = processColumn(col);
+           changed =changed || tempt;
         }
         board.setViewingPerspective(Side.NORTH);
 
