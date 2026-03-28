@@ -110,6 +110,14 @@ public class Model extends Observable {
         boolean changed;
         changed = false;
 
+
+        board.setViewingPerspective(side);
+        int col =0;
+        for(col =0;col<board.size();col++){/*遍历每一列*/
+           changed =changed || processColumn(col);
+        }
+        board.setViewingPerspective(Side.NORTH);
+
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
@@ -257,5 +265,65 @@ public class Model extends Observable {
     /** Returns hash code of Model’s string. */
     public int hashCode() {
         return toString().hashCode();
+    }
+
+
+    public boolean processColumn(int c){
+        //1. 创建一个标记数组，记录哪一行刚刚发生了合并
+        //防止 2-2-4 变成 8，正确的结果应该是（4-4）
+        boolean[] hasMerged  = new boolean[board.size()];
+        boolean targets = false;
+
+        //2. 从上往下遍历一遍（Row 3 -> Row 0)
+        //为什么要从上往下遍历，因为要先确定上面的方块的去向，才能决定下面的方块的位置
+        for (int r = board.size() -1; r>=0; r--){
+            Tile t = board.tile(c,r);
+
+            // 如果这一行是空的，就跳过
+            if (t == null){
+                continue;
+            }
+
+            // 3. 寻找这个小方块能去的最高的一行（Target Row )
+            // 用一个新方法来来寻找 Target Row
+            int target = findMoveTarget(c, r, hasMerged);
+
+            // 4. 如果目标位置和当前位置不同，说明可以移动
+            if (target != r){
+
+                boolean merged =  board.move(c, target,t);
+
+                //记录发生了改变
+                targets = true;
+
+                // 如果发生了合并（move 返回了 true）
+                if (merged){
+                    // 更新分数
+                    score += board.tile(c,target).value();
+                    // 标记这个目标行已经发生过合并了，这一轮不要再合并了
+                    hasMerged[target] = true;
+                }
+
+            }
+        }
+            return targets;
+    }
+
+    public int findMoveTarget(int col, int row, boolean[] hashMerged){
+        int targetRow = row;
+        for(int i = row+1; i<board.size();i++){
+            Tile t = board.tile(col,i);
+            if (t == null){
+                targetRow = i;
+                continue;
+            } else if (hashMerged[i] == false && t.value() == board.tile(col, row).value()) {
+                targetRow = i;
+                break;
+            }else {
+                break;
+            }
+
+        }
+        return targetRow;
     }
 }
