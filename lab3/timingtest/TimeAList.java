@@ -23,5 +23,30 @@ public class TimeAList {
 
     public static void timeAListConstruction() {
         // TODO: YOUR CODE HERE
+        //初始化链表，用于打印表格
+        AList<Integer> Ns = new AList<>();
+        AList<Double> times = new AList<>();
+        AList<Integer> opCounts = new AList<>();
+
+
+       int [] testNs = {1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000};
+
+       // for循环的简要写法
+       for(int n:testNs){
+           AList<Integer> test = new AList<>();
+           Stopwatch sw = new Stopwatch();
+
+           int i = 0;
+           while (i <n){
+                test.addLast(1);
+                i +=1;
+           }
+
+           double time = sw.elapsedTime();
+            Ns.addLast(n);
+            times.addLast(time);
+            opCounts.addLast(n);
+       }
+        printTimingTable(Ns,times,opCounts);
     }
 }
