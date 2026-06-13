@@ -1,6 +1,8 @@
 package deque;
 
-public class  LinkedListDeque <T> implements Deque<T> {
+import java.util.Iterator;
+
+public class  LinkedListDeque <T> implements Deque<T>,Iterable<T> {
     /**
      *对 LinkedListDeque 进行变量和内嵌类的定义
      */
@@ -17,6 +19,32 @@ public class  LinkedListDeque <T> implements Deque<T> {
     }
     private int size;
     private Node sentinel;
+
+    @Override
+    public Iterator<T> iterator() {
+        return new LinkedListIterator();
+    }
+
+    private class LinkedListIterator implements Iterator<T>{
+
+        Node curr = sentinel.next;
+        @Override
+        public T next() {
+
+            if (!hasNext()){
+                throw new java.util.NoSuchElementException();
+            }
+            T item = curr.item;
+            curr = curr.next;
+
+            return item;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return curr != sentinel;
+        }
+    }
 
     public LinkedListDeque(){
         size = 0;
