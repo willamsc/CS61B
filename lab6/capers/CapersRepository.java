@@ -90,6 +90,6 @@ public class CapersRepository {
         Dog d = Dog.fromFile(name);
         d.haveBirthday();
         d.saveDog();
-        System.out.println(d.toString());
+
     }
 }
