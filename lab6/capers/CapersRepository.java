@@ -1,7 +1,10 @@
 package capers;
 
 import java.io.File;
+
+import static capers.Dog.DOG_FOLDER;
 import static capers.Utils.*;
+
 
 /** A repository for Capers 
  * @author TODO
@@ -18,7 +21,7 @@ public class CapersRepository {
     static final File CWD = new File(System.getProperty("user.dir"));
 
     /** Main metadata folder. */
-    static final File CAPERS_FOLDER = null; // TODO Hint: look at the `join`
+    static final File CAPERS_FOLDER = Utils.join(".capers"); // TODO Hint: look at the `join`
                                             //      function in Utils
 
     /**
@@ -32,6 +35,15 @@ public class CapersRepository {
      */
     public static void setupPersistence() {
         // TODO
+        File caper = Utils.join(".capers");
+        File dogs = Utils.join(caper, "dogs");
+
+        if (!caper.exists()) {
+            caper.mkdir();
+        }
+        if (!dogs.exists()) {
+            dogs.mkdir();
+        }
     }
 
     /**
@@ -41,6 +53,16 @@ public class CapersRepository {
      */
     public static void writeStory(String text) {
         // TODO
+        File story = Utils.join(CAPERS_FOLDER,"story");
+        String newContent = "";
+        String oldContent = "";
+        if (story.exists()){
+             oldContent = Utils.readContentsAsString(story);
+        }
+
+        newContent = oldContent + text + "\n";
+        Utils.writeContents(story,newContent);
+        System.out.print(newContent);
     }
 
     /**
@@ -50,6 +72,10 @@ public class CapersRepository {
      */
     public static void makeDog(String name, String breed, int age) {
         // TODO
+        Dog d = new Dog(name,breed,age);
+        File dog = Utils.join(DOG_FOLDER,name);
+        d.saveDog();
+        System.out.println(d);
     }
 
     /**
@@ -60,5 +86,10 @@ public class CapersRepository {
      */
     public static void celebrateBirthday(String name) {
         // TODO
+        File dogName = Utils.join(DOG_FOLDER,name);
+        Dog d = Dog.fromFile(name);
+        d.haveBirthday();
+        d.saveDog();
+        System.out.println(d.toString());
     }
 }
