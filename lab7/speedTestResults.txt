@@ -1,0 +1,14 @@
+Random insertion, string length = 7, N = 10000
+ULLMap: 0.20 sec
+BSTMap: 0.01 sec
+TreeMap: 0.01 sec
+HashMap: 0.00 sec
+
+In-order insertion, N = 10000
+ULLMap: 0.39 sec
+BSTMap: 0.32 sec
+TreeMap: 0.01 sec
+HashMap: 0.00 sec
+
+Observation:
+BSTMap performs well with random insertion, but becomes much slower with in-order insertion because the BST can degenerate into a linked-list-like structure.
