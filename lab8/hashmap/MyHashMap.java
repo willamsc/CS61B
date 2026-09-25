@@ -7,7 +7,7 @@ import java.util.Collection;
  *  access to elements via get(), remove(), and put() in the best case.
  *
  *  Assumes null keys will never be inserted, and does not resize down upon remove().
- *  @author YOUR NAME HERE
+ *  @author Williamsc
  */
 public class MyHashMap<K, V> implements Map61B<K, V> {
 
@@ -15,6 +15,9 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      * Protected helper class to store key/value pairs
      * The protected qualifier allows subclass access
      */
+
+    private int size;
+    private double maxLoad;
     protected class Node {
         K key;
         V value;
@@ -30,9 +33,13 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     // You should probably define some more!
 
     /** Constructors */
-    public MyHashMap() { }
+    public MyHashMap() {
+        this(16,0.75);
+    }
 
-    public MyHashMap(int initialSize) { }
+    public MyHashMap(int initialSize) {
+        this(initialSize,0.75);
+    }
 
     /**
      * MyHashMap constructor that creates a backing array of initialSize.
@@ -41,7 +48,15 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      * @param initialSize initial size of backing array
      * @param maxLoad maximum load factor
      */
-    public MyHashMap(int initialSize, double maxLoad) { }
+    public MyHashMap(int initialSize, double maxLoad) {
+
+        this.maxLoad = maxLoad;
+        this.size =0;
+        Collection<Node>[] table =createTable(initialSize);
+        for (int i = 0; i < buckets.length; i++) {
+
+        }
+    }
 
     /**
      * Returns a new node to be placed in a hash table bucket
@@ -82,10 +97,40 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      * @param tableSize the size of the table to create
      */
     private Collection<Node>[] createTable(int tableSize) {
-        return null;
+
+        Collection[] table = new Collection[tableSize];
+
+        return (Collection<Node>[]) table;
     }
 
     // TODO: Implement the methods of the Map61B Interface below
     // Your code won't compile until you do so!
+
+
+    @Override
+    public void clear() {
+
+    }
+
+    @Override
+    public boolean containsKey(K key) {
+        return false;
+    }
+
+    @Override
+    public V get(K key) {
+        return null;
+    }
+
+    @Override
+    public int size() {
+        return 0;
+    }
+
+    @Override
+    public void put(K key, V value) {
+
+    }
+
 
 }
