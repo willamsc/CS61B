@@ -1,6 +1,9 @@
 package hashmap;
 
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Set;
 
 /**
  *  A hash table-backed Map implementation. Provides amortized constant time
@@ -52,9 +55,9 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
 
         this.maxLoad = maxLoad;
         this.size =0;
-        Collection<Node>[] table =createTable(initialSize);
+         buckets =createTable(initialSize);
         for (int i = 0; i < buckets.length; i++) {
-
+            buckets[i] = createBucket();
         }
     }
 
@@ -84,7 +87,8 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      * OWN BUCKET DATA STRUCTURES WITH THE NEW OPERATOR!
      */
     protected Collection<Node> createBucket() {
-        return null;
+
+        return new LinkedList<>();
     }
 
     /**
@@ -132,5 +136,23 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
 
     }
 
+    @Override
+    public Set<K> keySet() {
+        return null;
+    }
 
+    @Override
+    public Iterator<K> iterator() {
+        return null;
+    }
+
+    @Override
+    public V remove(K key, V value) {
+        return null;
+    }
+
+    @Override
+    public V remove(K key) {
+        return null;
+    }
 }
