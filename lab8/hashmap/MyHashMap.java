@@ -146,7 +146,29 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         }
         buckets[index].add(createNode(key,value));
         size = size +1;
+        if (size/(double)buckets.length >maxLoad){
+            resize();
+        }
 
+    }
+
+    private void resize() {
+        // 初始化新的buckets
+        Collection<Node>[] temperBuckets = buckets;
+        this.buckets = createTable(buckets.length*2);
+        for (int i = 0; i < buckets.length; i++) {
+            buckets[i] = createBucket();
+        }
+
+        // 给原先的node计算新的index
+        for (int i = 0; i < temperBuckets.length; i++) {
+            Iterator<Node> iterator = temperBuckets[i].iterator();
+            while (iterator.hasNext()){
+                Node node = iterator.next();
+                int index = Math.floorMod(node.key.hashCode(),buckets.length);
+                buckets[index].add(node);
+            }
+        }
     }
 
     @Override
