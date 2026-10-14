@@ -1,9 +1,6 @@
 package hashmap;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Set;
+import java.util.*;
 
 /**
  *  A hash table-backed Map implementation. Provides amortized constant time
@@ -173,7 +170,15 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
 
     @Override
     public Set<K> keySet() {
-        return null;
+        Set<K> keys = new HashSet<>();
+        for (int i = 0; i < buckets.length; i++) {
+            Iterator<Node> iterator = buckets[i].iterator();
+            while (iterator.hasNext()){
+                Node node = iterator.next();
+                keys.add(node.key);
+            }
+        }
+        return keys;
     }
 
     @Override
