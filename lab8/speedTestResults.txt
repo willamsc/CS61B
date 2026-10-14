@@ -1,0 +1,38 @@
+# Lab 8 Speed Test Results
+
+## 1. InsertRandomSpeedTest
+
+String length L = 5
+
+| Map implementation | N = 10,000 | N = 50,000 |
+|---|---:|---:|
+| ULLMap | 0.23 sec | Stack Overflow |
+| MyHashMap | 0.01 sec | 0.05 sec |
+| Java HashMap | 0.00 sec | 0.02 sec |
+
+## 2. InsertInOrderSpeedTest
+
+| Map implementation | N = 10,000 |
+|---|---:|
+| ULLMap | 0.36 sec |
+| MyHashMap | 0.02 sec |
+| Java HashMap | 0.00 sec |
+
+## 3. BucketsSpeedTest
+
+String length L = 5, N = 10,000
+
+| Bucket implementation | Time |
+|---|---:|
+| ArrayList | 0.01 sec |
+| LinkedList | 0.01 sec |
+| TreeSet | 0.02 sec |
+| HashSet | 0.01 sec |
+| PriorityQueue | 0.01 sec |
+
+## Observations
+
+- MyHashMap was substantially faster than ULLMap in the tested insertion scenarios.
+- Java HashMap performed well in these small-scale tests.
+- The bucket implementations had similar measured times at N = 10,000, so more measurements would be needed to draw reliable conclusions.
+- ULLMap encountered a StackOverflowError during the random insertion test with N = 50,000.

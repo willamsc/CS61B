@@ -110,7 +110,10 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
 
     @Override
     public void clear() {
-
+        for (int i = 0; i < buckets.length; i++) {
+            buckets[i] = createBucket();
+        }
+        size =0;
     }
 
     @Override
@@ -128,6 +131,14 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
 
     @Override
     public V get(K key) {
+        int index = Math.floorMod(key.hashCode(),buckets.length);
+        Iterator<Node> iterator = buckets[index].iterator();
+        while (iterator.hasNext()){
+            Node node = iterator.next();
+            if (node.key.equals(key)){
+                return node.value;
+            }
+        }
         return null;
     }
 
@@ -191,7 +202,9 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
 
     @Override
     public Iterator<K> iterator() {
-        return null;
+        Iterator<K> keys = keySet().iterator();
+
+        return keys;
     }
 
     @Override
