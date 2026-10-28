@@ -14,6 +14,8 @@ public class Main {
             return;
         }
         String firstArg = args[0];
+
+
         switch(firstArg) {
             case "init":
                 // TODO: handle the `init` command
@@ -21,8 +23,26 @@ public class Main {
                 break;
             case "add":
                 // TODO: handle the `add [filename]` command
+                if (!Repository.GITLET_DIR.exists()) {
+                    System.out.println(
+                            "Not in an initialized Gitlet directory."
+                    );
+                    return;
+                }
+
+
+                if (args.length!=2) {
+                    System.out.println("Incorrect operands.");
+                    return;
+                }
+                Repository.add(args[1]);
                 break;
             // TODO: FILL THE REST IN
+            default:
+                System.out.println(
+                        "No command with that name exists."
+                );
+                break;
         }
     }
 }

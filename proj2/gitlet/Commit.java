@@ -57,4 +57,8 @@ public class Commit implements Serializable {
     public String getId(){
         return Utils.sha1(Utils.serialize(this));
     }
+
+    public String getBlobId(String fileName){
+        return blobs.get(fileName);
+    }
 }
