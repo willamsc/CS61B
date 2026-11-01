@@ -38,6 +38,31 @@ public class Main {
                 Repository.add(args[1]);
                 break;
             // TODO: FILL THE REST IN
+            case "commit":
+                // 检查仓库是否初始化
+                if (!Repository.GITLET_DIR.exists()) {
+                    System.out.println(
+                            "Not in an initialized Gitlet directory."
+                    );
+                    return;
+                }
+
+                // 检查是否缺少提交信息
+                if (args.length == 1){
+                    System.out.println("Please enter a commit message.");
+                    return;
+                }
+
+                // 检查参数是否过多
+                if (args.length>2){
+                    System.out.println("Incorrect operands.");
+                    return;
+                }
+
+                // 调用 Repository.commit()
+                Repository.commit(args[1]);
+
+                break;
             default:
                 System.out.println(
                         "No command with that name exists."

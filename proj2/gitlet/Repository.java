@@ -1,6 +1,8 @@
 package gitlet;
 
 import java.io.File;
+import java.util.HashMap;
+
 import static gitlet.Utils.*;
 
 // TODO: any imports you need here
@@ -114,6 +116,49 @@ public class Repository {
 
     }
 
+    /**commit 函数*/
+    public static void commit(String message){
+
+        // TODO: 检查 message 是否为空
+        // 如果为空，输出错误信息并 return
+        if (message.trim().isEmpty()){
+            System.out.println("Please enter a commit message.");
+            return;
+        }
+
+        Stage stage = loadStage();
+        if (stage.isEmpty()){
+            System.out.println("No changes added to the commit.");
+            return;
+        }
+
+        /**获取父 commit 的blob*/
+        Commit parentCommit = getCurrentCommit();
+        HashMap<String,String> newBlobs = parentCommit.getBlobs();
+
+        newBlobs.putAll(stage.getAdditions());
+
+        for (String fileName : stage.getRemoval()) {
+            // 根据 fileName 删除 newBlobs 中的映射
+            newBlobs.remove(fileName);
+        }
+
+        /**保存 当前commit*/
+        String parentId=parentCommit.getId();
+        Commit newCommit = new Commit(message,parentId,newBlobs);
+        saveCommit(newCommit);
+
+        /**更新当前 branch 所指向的commit*/
+        String currentBranch = getCurrentBranch();
+        File branchFile = join(BRANCHES_DIR,currentBranch);
+
+        String newCommitId =newCommit.getId();
+        writeContents(branchFile,newCommitId);
+
+        /**清除暂存区*/
+        saveStage(new Stage());
+    }
+
     private static String getCurrentBranch(){
         /**读取HEAD指向的分支名称*/
        File currentBranch = join(GITLET_DIR,"HEAD");
@@ -146,4 +191,9 @@ public class Repository {
         // TODO
         writeObject(STAGE_FILE,stage);
     }
+
+
+    /**commit 命令所要用到的工具函数*/
+
+
 }

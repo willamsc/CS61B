@@ -61,4 +61,10 @@ public class Commit implements Serializable {
     public String getBlobId(String fileName){
         return blobs.get(fileName);
     }
+
+    public HashMap<String, String> getBlobs() {
+        // 返回 blobs 的副本
+        HashMap<String,String> map = new HashMap<>(this.blobs);
+        return map;
+    }
 }
