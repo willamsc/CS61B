@@ -159,6 +159,40 @@ public class Repository {
         saveStage(new Stage());
     }
 
+    /**rm 方法*/
+    public static void rm(String fileName){
+
+        /** 加载暂存区和当前 commit */
+        Stage stage = loadStage();
+        Commit currentCommit = getCurrentCommit();
+
+        if (!stage.isStagedForAddition(fileName) && currentCommit.getBlobId(fileName)== null) {
+            System.out.println("No reason to remove the file.");
+            return;
+        }
+
+        /**取消被删除文件在暂存区的添加暂存*/
+        if (stage.isStagedForAddition(fileName)){
+            stage.unStage(fileName);
+        }
+
+        /**1、检查被删除文件是否被当前 commit 追踪
+         * 2、标记文件在下一次 Commit 中不再被追踪
+         * 3、并将该文件从当前工作目录下删除*/
+
+        if (currentCommit.getBlobId(fileName)!= null){
+            stage.stageRemoval(fileName);
+
+            File targetFile = join(CWD,fileName);
+
+            // 使用 restrictedDelete 删除 targetFile
+            restrictedDelete(targetFile);
+        }
+
+        saveStage(stage);
+
+    }
+
     private static String getCurrentBranch(){
         /**读取HEAD指向的分支名称*/
        File currentBranch = join(GITLET_DIR,"HEAD");

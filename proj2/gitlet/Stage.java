@@ -7,6 +7,7 @@ public class Stage implements Serializable {
 
     private HashMap<String,String> additions;
     private HashSet<String> removal;
+    private static final long serialVersionUID = 1L;
 
     public Stage(){
         this.additions = new HashMap<>();
@@ -42,5 +43,15 @@ public class Stage implements Serializable {
     public HashSet<String> getRemoval() {
         // 返回 removal 的独立副本
         return new HashSet<>(this.removal);
+    }
+
+    public void stageRemoval(String fileName) {
+        // 将文件名加入 removal 集合
+        this.removal.add(fileName);
+    }
+
+    public boolean isStagedForAddition(String fileName) {
+        // 判断 additions 是否包含这个文件名
+        return this.additions.containsKey(fileName);
     }
 }

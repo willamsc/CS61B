@@ -28,6 +28,7 @@ public class Commit implements Serializable {
     private String secondParentId;
     private HashMap<String,String> blobs;
 
+    private static final long serialVersionUID = 1L;
 
     /* TODO: fill in the rest of this class. */
     // 专门提供给 initialCommit 的构造方法。
