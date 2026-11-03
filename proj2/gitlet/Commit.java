@@ -68,4 +68,19 @@ public class Commit implements Serializable {
         HashMap<String,String> map = new HashMap<>(this.blobs);
         return map;
     }
+
+    public String getParentId() {
+        // 返回当前 Commit 的父 Commit ID
+        return this.parentId;
+    }
+
+    public String getMessage() {
+        // 返回当前 Commit 的提交信息
+        return this.message;
+    }
+
+    public Date getTimestamp() {
+        // 返回当前 Commit 的提交时间
+        return new Date(this.timeStamp.getTime());
+    }
 }

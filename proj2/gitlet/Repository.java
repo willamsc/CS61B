@@ -2,6 +2,8 @@ package gitlet;
 
 import java.io.File;
 import java.util.HashMap;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import static gitlet.Utils.*;
 
@@ -191,6 +193,45 @@ public class Repository {
 
         saveStage(stage);
 
+    }
+
+
+    public static void log() {
+        Commit current = getCurrentCommit();
+
+        while (current!= null) {
+
+            // 输出commit 信息
+            System.out.println("===");
+            System.out.println("commit "+ current.getId());
+
+            // 在这里创建 SimpleDateFormat，并输出 Date: ...
+            SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM d HH:mm:ss yyyy Z",Locale.US);
+            System.out.println("Date: "+ formatter.format(current.getTimestamp()));
+
+            System.out.println(current.getMessage());
+            System.out.println();
+
+            String parentId = current.getParentId();
+
+            if (parentId == null) {
+                break;
+            }
+
+            current = getCommitById(parentId);
+        }
+    }
+
+
+    public static Commit getCommitById(String commitId) {
+        // 1. 根据 commitId 找到对应的文件
+        File commit = join(COMMITS_DIR,commitId);
+
+        // 2. 使用 readObject() 读取 Commit
+        Commit commitContent = readObject(commit,Commit.class);
+
+        // 3. 返回 Commit 对象
+        return commitContent;
     }
 
     private static String getCurrentBranch(){

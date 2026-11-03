@@ -83,6 +83,25 @@ public class Main {
                 Repository.rm(args[1]);
 
                 break;
+
+            case "log":
+                // 1. 检查仓库是否初始化
+                if (!Repository.GITLET_DIR.exists()) {
+                    System.out.println(
+                            "Not in an initialized Gitlet directory."
+                    );
+                    return;
+                }
+
+                // 2. 检查 args.length 是否等于 1
+                // 参数错误输出 "Incorrect operands."
+                if (args.length != 1){
+                    System.out.println("Incorrect operands.");
+                    return;
+                }
+
+                // 3. 调用 Repository.log()
+                Repository.log();
             default:
                 System.out.println(
                         "No command with that name exists."
