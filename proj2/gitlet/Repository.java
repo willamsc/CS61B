@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import java.util.List;
 
 import static gitlet.Utils.*;
 
@@ -202,15 +203,7 @@ public class Repository {
         while (current!= null) {
 
             // 输出commit 信息
-            System.out.println("===");
-            System.out.println("commit "+ current.getId());
-
-            // 在这里创建 SimpleDateFormat，并输出 Date: ...
-            SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM d HH:mm:ss yyyy Z",Locale.US);
-            System.out.println("Date: "+ formatter.format(current.getTimestamp()));
-
-            System.out.println(current.getMessage());
-            System.out.println();
+           printCommit(current);
 
             String parentId = current.getParentId();
 
@@ -219,6 +212,18 @@ public class Repository {
             }
 
             current = getCommitById(parentId);
+        }
+    }
+
+    public static void globalLog() {
+
+        // 获取 commits 目录下所有 Commit 文件名
+        List<String> commitFiles = plainFilenamesIn(COMMITS_DIR);
+
+        // 遍历这些文件名
+        for(String fileName : commitFiles){
+            Commit commit = getCommitById(fileName);
+            printCommit(commit);
         }
     }
 
@@ -268,7 +273,19 @@ public class Repository {
     }
 
 
-    /**commit 命令所要用到的工具函数*/
+    /**log 信息的统一输出格式*/
+    private static void printCommit(Commit commit) {
+        // 将之前 log() 中的 Commit 输出代码移动到这里
+        System.out.println("===");
+        System.out.println("commit "+ commit.getId());
+
+        // 在这里创建 SimpleDateFormat，并输出 Date: ...
+        SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM d HH:mm:ss yyyy Z",Locale.US);
+        System.out.println("Date: "+ formatter.format(commit.getTimestamp()));
+
+        System.out.println(commit.getMessage());
+        System.out.println();
+    }
 
 
 }
