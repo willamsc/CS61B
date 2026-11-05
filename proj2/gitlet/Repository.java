@@ -239,6 +239,26 @@ public class Repository {
         return commitContent;
     }
 
+
+    public static void find(String message){
+        List<String> commitFiles = plainFilenamesIn(COMMITS_DIR);
+
+        boolean found = false;
+
+        for (String commitId : commitFiles){
+            Commit commit = getCommitById(commitId);
+
+            if (commit.getMessage().equals(message)){
+                System.out.println(commitId);
+                found = true;
+            }
+        }
+
+        if (!found){
+            System.out.println("Found no commit with that message.");
+        }
+    }
+
     private static String getCurrentBranch(){
         /**读取HEAD指向的分支名称*/
        File currentBranch = join(GITLET_DIR,"HEAD");

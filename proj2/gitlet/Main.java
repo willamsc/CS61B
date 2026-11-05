@@ -111,12 +111,29 @@ public class Main {
                     );
                     return;
                 }
-                // 2. 检查参数数量是否为 1==
+                // 2. 检查参数数量是否为 1
                 if (args.length != 1){
                     System.out.println("Incorrect operands.");
                     return;
                 }
                 Repository.globalLog();
+                break;
+            case "find":
+                // 1. 检查仓库是否初始化
+                if (!Repository.GITLET_DIR.exists()) {
+                    System.out.println(
+                            "Not in an initialized Gitlet directory."
+                    );
+                    return;
+                }
+
+                // 2. 检查参数数量是否为 2
+                if (args.length != 2){
+                    System.out.println("Incorrect operands.");
+                    return;
+                }
+                // 3. 调用 Repository.find()
+                Repository.find(args[1]);
                 break;
             default:
                 System.out.println(
